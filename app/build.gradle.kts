@@ -67,12 +67,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //Retrofit libraries
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)//Converts json into a data class
+    //Converts json into a data class
     implementation(libs.okhttp)// For Logging
     implementation(libs.logging.interceptor)
-
+    implementation("com.squareup.retrofit2:converter-gson:2.10.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
     //Coil library for pictures
     implementation(libs.coil.compose)
 

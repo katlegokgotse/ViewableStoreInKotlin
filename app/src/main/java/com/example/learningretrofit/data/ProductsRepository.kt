@@ -1,5 +1,6 @@
-package com.example.learningretrofit.data.model
+package com.example.learningretrofit.data
 
+import com.example.learningretrofit.data.model.ProductDescription
 import kotlinx.coroutines.flow.Flow
 
 interface ProductsRepository {

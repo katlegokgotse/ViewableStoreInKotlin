@@ -1,8 +1,7 @@
-package com.example.learningretrofit.data.model
+package com.example.learningretrofit.data
 
+import com.example.learningretrofit.data.model.ProductsList
 import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface Api {
     /** Adds path to the base url
@@ -22,7 +21,7 @@ interface Api {
      *
      */
     @GET("products/{type}")
-    suspend fun getProductsList():ProductsList
+    suspend fun getProductsList(): ProductsList
 
     companion object{
         const val BASE_URL = "https://dummyjson.com/" // Base url is a path
