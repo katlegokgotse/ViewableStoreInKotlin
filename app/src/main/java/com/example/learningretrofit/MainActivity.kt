@@ -11,11 +11,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -112,7 +115,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Product(productDescription: ProductDescription) {
-    val imageState = rememberAsyncImagePainter(
+    val imageState = rememberAsyncImagePainter( //Holds the state for the image using the coil dependency
         model =  ImageRequest.Builder(LocalContext.current).data(productDescription.thumbnail)
             .size(Size.ORIGINAL).build()
     ).state //ImageRequest.Builder.data.size.build
@@ -123,53 +126,45 @@ fun Product(productDescription: ProductDescription) {
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primaryContainer)
     ) {
-        if (imageState is AsyncImagePainter.State.Error){
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                contentAlignment = Alignment.Center
-            ){
-                CircularProgressIndicator()
+            if (imageState is AsyncImagePainter.State.Error){
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentAlignment = Alignment.Center
+                ){
+                    CircularProgressIndicator()
+                }
             }
-        }
-        if (imageState is AsyncImagePainter.State.Success){
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = imageState.painter,
-                contentDescription = productDescription.title,
-                contentScale = ContentScale.Crop
+            if (imageState is AsyncImagePainter.State.Success){
+                Image(
+                    modifier = Modifier.fillMaxWidth(),
+                    painter = imageState.painter,
+                    contentDescription = productDescription.title,
+                    contentScale = ContentScale.Crop
+                )
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+            Row() {
+                Text(
+                    text = productDescription.title,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = "R ${productDescription.price}",
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Text(
+                text = productDescription.category,
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
-        }
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(
-            text = productDescription.title,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
         Text(
             text = productDescription.description,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
-        Text(
-            text = "R ${productDescription.price}",
-            modifier = Modifier.padding(horizontal = 16.dp),
-            fontSize = 17.sp,
-            fontWeight = FontWeight.Bold)
+        }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    LearningRetrofitTheme {
-        Greeting("Android")
-    }
-}

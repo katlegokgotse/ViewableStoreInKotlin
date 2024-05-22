@@ -20,7 +20,7 @@ interface Api {
      *     ):ProductsList
      *
      */
-    @GET("products/{type}")
+    @GET("products")
     suspend fun getProductsList(): ProductsList
 
     companion object{
